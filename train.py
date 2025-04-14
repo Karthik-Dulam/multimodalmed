@@ -117,6 +117,8 @@ def train_model(config, optuna_trial=None):
         callbacks=callbacks,
         logger=loggers,
         strategy=config["training"]["strategy"],
+        val_check_interval=config["training"]["val_check_interval"],
+        stochastic_weight_avg=True,
         enable_progress_bar=not optuna_trial,
         enable_model_summary=not optuna_trial,
     )
@@ -142,11 +144,16 @@ def train_model(config, optuna_trial=None):
             wandb_logger.experiment.finish(exit_code=1, quiet=True)
         return float('-inf')
     finally:
+        # Ensure wandb run is finished properly, even if errors occurred
         if logging_config["use_wandb"] and wandb_logger and wandb_logger.experiment and wandb_logger.experiment.id:
-            if wandb_logger.experiment.backend and wandb_logger.experiment.backend.interface.communicate_stop():
-                pass
-            else:
+            # Check if the run is still active before finishing
+            # The check for backend might be outdated or cause issues
+            try:
+                # Simply finish the run if it exists
                 wandb_logger.experiment.finish()
+            except Exception as finish_error:
+                # Log potential errors during finish, but don't crash the overall process
+                print(f"Error finishing wandb run: {finish_error}")
 
 
 def main():

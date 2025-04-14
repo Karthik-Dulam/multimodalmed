@@ -8,7 +8,7 @@ def get_default_config():
             "dataset_split": "train",
             "train_ratio": 0.8,
             "val_ratio": 0.1,
-            "batch_size": 32,
+            "batch_size": 48,
             "num_workers": 10,
             "drop_last": True,
         },
@@ -34,10 +34,11 @@ def get_default_config():
         "training": {
             "learning_rate": 1e-4,
             "weight_decay": 1e-5,
-            "max_epochs": 3,
+            "max_epochs": 1,
             "precision": 16, 
             "devices": -1,
             "strategy": "ddp_find_unused_parameters_true",
+            "val_check_interval": 0.25,
             # "strategy": "ddp",
             "early_stopping": {
                 "monitor": "val_auroc_avg",
