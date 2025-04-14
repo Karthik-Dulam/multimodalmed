@@ -125,6 +125,7 @@ def train_model(config, optuna_trial=None):
     print(f"Hyperparameters: {config['training']['learning_rate']=}, {config['training']['weight_decay']=}, {config['model']['hidden_dim']=}, {config['model']['classifier']['dropout']=}")
 
     try:
+        print(f"--- Calling fit ---")
         trainer.fit(model, data_module)
         print(f"--- Finished Training {'(Optuna Trial ' + str(optuna_trial.number) + ')' if optuna_trial else ''} for Mode: {config['mode']} ---")
         optimized_metric = trainer.callback_metrics.get(monitor_metric)
