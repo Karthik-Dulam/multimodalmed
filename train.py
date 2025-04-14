@@ -39,7 +39,7 @@ def train_model(config, optuna_trial=None):
         config["training"]["learning_rate"] = optuna_trial.suggest_float("learning_rate", 1e-5, 1e-3, log=True)
         config["training"]["weight_decay"] = optuna_trial.suggest_float("weight_decay", 1e-6, 1e-4, log=True)
         # config["model"]["hidden_dim"] = optuna_trial.suggest_categorical("hidden_dim", [128, 256, 512], log=True)
-        config["model"]["classifier"]["dropout"] = optuna_trial.suggest_float("dropout", 0.1, 0.5, log=True)
+        # config["model"]["classifier"]["dropout"] = optuna_trial.suggest_float("dropout", 0.1, 0.5, log=True)
 
     ds, labels = load_datasets(config)
 
@@ -125,7 +125,6 @@ def train_model(config, optuna_trial=None):
     print(f"Hyperparameters: {config['training']['learning_rate']=}, {config['training']['weight_decay']=}, {config['model']['hidden_dim']=}, {config['model']['classifier']['dropout']=}")
 
     try:
-        print(f"--- Calling fit ---")
         trainer.fit(model, data_module)
         print(f"--- Finished Training {'(Optuna Trial ' + str(optuna_trial.number) + ')' if optuna_trial else ''} for Mode: {config['mode']} ---")
         optimized_metric = trainer.callback_metrics.get(monitor_metric)
