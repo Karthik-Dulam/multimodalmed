@@ -1,7 +1,7 @@
-# torch
+torch
 pytorch-lightning
 optuna
-# transformers
+transformers
 torchxrayvision
 datasets
 numpy

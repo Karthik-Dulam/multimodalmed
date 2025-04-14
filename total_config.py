@@ -38,7 +38,7 @@ def get_default_config():
             "precision": 16, 
             "devices": -1,
             # "strategy": "ddp_find_unused_parameters_true",
-            "strategy": "ddp_notebook",
+            "strategy": "ddp",
             "early_stopping": {
                 "monitor": "val_auroc_avg",
                 "min_delta": 0.00,
