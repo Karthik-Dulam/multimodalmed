@@ -8,7 +8,7 @@ def get_default_config():
             "dataset_split": "train",
             "train_ratio": 0.8,
             "val_ratio": 0.1,
-            "batch_size": 128,
+            "batch_size": 32,
             "num_workers": 10,
             "drop_last": True,
         },
