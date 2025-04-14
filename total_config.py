@@ -36,7 +36,7 @@ def get_default_config():
             "weight_decay": 1e-5,
             "max_epochs": 6,
             "precision": 16, 
-            "devices": [1], 
+            "devices": "auto",
             "strategy": "ddp_find_unused_parameters_true",
             "early_stopping": {
                 "monitor": "val_auroc_avg",
