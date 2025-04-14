@@ -1,0 +1,13 @@
+torch
+pytorch-lightning
+optuna
+transformers
+torchxrayvision
+datasets
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+tqdm
+wandb
