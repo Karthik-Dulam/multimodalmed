@@ -1,5 +1,5 @@
 import pytorch_lightning as pl
-from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
+from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping, StochasticWeightAveraging
 from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 from pytorch_lightning.callbacks import Callback
 
@@ -86,6 +86,7 @@ def train_model(config, optuna_trial=None):
         mode=checkpoint_config["mode"],
     )
     callbacks.append(checkpoint_callback)
+    callbacks.append(StochasticWeightAveraging(swa_lrs=1e-2))
 
     loggers = []
     logging_config = config["training"]["logging"]
@@ -118,7 +119,6 @@ def train_model(config, optuna_trial=None):
         logger=loggers,
         strategy=config["training"]["strategy"],
         val_check_interval=config["training"]["val_check_interval"],
-        stochastic_weight_avg=True,
         enable_progress_bar=not optuna_trial,
         enable_model_summary=not optuna_trial,
     )
